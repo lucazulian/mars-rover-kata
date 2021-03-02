@@ -1,0 +1,12 @@
+version: "3.7"
+
+services:
+  mars-rover-kata:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    working_dir: /app
+    command: tail -f /dev/null
+    volumes:
+      - .:/app
+      - ./.volumes/mars_rover_kata/_build:/app/_build

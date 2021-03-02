@@ -1,0 +1,59 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build and test - OTP ${{ matrix.otp }} / Elixir ${{ matrix.elixir }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        otp: ['23.2']
+        elixir: ['1.11.3']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Elixir ${{matrix.elixir}}
+      uses: actions/setup-elixir@v1
+      with:
+        elixir-version: ${{ matrix.elixir }}
+        otp-version: ${{matrix.otp}}
+        experimental-otp: true
+
+    - name: Restore dependencies cache
+      uses: actions/cache@v2
+      with:
+        path: deps
+        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-mix-
+
+    - name: Install dependencies
+      run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+
+    - name: Check formatting
+      run: mix format --check-formatted
+
+    - name: Run tests
+      run: |
+        epmd -daemon
+        mix test --include distributed
+
+    - name: Retrieve Dialyzer PLT cache
+      uses: actions/cache@v1
+      id: plt-cache
+      with:
+        path: priv/plts
+        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-plts-${{ hashFiles('**/mix.lock') }}
+
+    - name: Create Dialyzer PLTs
+      if: steps.plt-cache.outputs.cache-hit != 'true'
+      run: |
+        mkdir -p priv/plts
+        mix dialyzer --plt
+
+    - name: Static code analysis
+      run: mix check
