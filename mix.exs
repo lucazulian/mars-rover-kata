@@ -20,8 +20,7 @@ defmodule MarsRoverKata.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {MarsRoverKata.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
