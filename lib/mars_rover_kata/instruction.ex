@@ -4,74 +4,75 @@ defmodule MarsRoverKata.Instruction do
   """
 
   alias MarsRoverKata.Planet
+  alias MarsRoverKata.Point
   alias MarsRoverKata.Position
 
-  @spec perform(Planet.t(), Position.t(), atom) :: Position.t()
-  def perform(
+  @spec perform_next(Planet.t(), Position.t(), atom) :: Position.t()
+  def perform_next(
         %Planet{} = planet,
         %Position{} = position,
         instruction
       )
       when instruction in [:F, :B] do
     position
-    |> do_perform(instruction)
+    |> perform(instruction)
     |> Planet.to_absolute_position(planet)
   end
 
-  def perform(
+  def perform_next(
         %Planet{} = _planet,
         %Position{} = position,
         instruction
       )
       when instruction in [:L, :R] do
-    do_perform(position, instruction)
+    perform(position, instruction)
   end
 
-  defp do_perform(%Position{x: x, y: y, direction: :N = direction}, :F),
-    do: %Position{x: x, y: y + 1, direction: direction}
+  defp perform(%Position{point: point, direction: :N = direction}, :F),
+    do: %Position{point: Point.new(point.x, point.y + 1), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :N = direction}, :B),
-    do: %Position{x: x, y: y - 1, direction: direction}
+  defp perform(%Position{point: point, direction: :N = direction}, :B),
+    do: %Position{point: Point.new(point.x, point.y - 1), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :S = direction}, :F),
-    do: %Position{x: x, y: y - 1, direction: direction}
+  defp perform(%Position{point: point, direction: :S = direction}, :F),
+    do: %Position{point: Point.new(point.x, point.y - 1), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :S = direction}, :B),
-    do: %Position{x: x, y: y + 1, direction: direction}
+  defp perform(%Position{point: point, direction: :S = direction}, :B),
+    do: %Position{point: Point.new(point.x, point.y + 1), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :W = direction}, :F),
-    do: %Position{x: x - 1, y: y, direction: direction}
+  defp perform(%Position{point: point, direction: :W = direction}, :F),
+    do: %Position{point: Point.new(point.x - 1, point.y), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :W = direction}, :B),
-    do: %Position{x: x + 1, y: y, direction: direction}
+  defp perform(%Position{point: point, direction: :W = direction}, :B),
+    do: %Position{point: Point.new(point.x + 1, point.y), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :E = direction}, :F),
-    do: %Position{x: x + 1, y: y, direction: direction}
+  defp perform(%Position{point: point, direction: :E = direction}, :F),
+    do: %Position{point: Point.new(point.x + 1, point.y), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :E = direction}, :B),
-    do: %Position{x: x - 1, y: y, direction: direction}
+  defp perform(%Position{point: point, direction: :E = direction}, :B),
+    do: %Position{point: Point.new(point.x - 1, point.y), direction: direction}
 
-  defp do_perform(%Position{x: x, y: y, direction: :N}, :L),
-    do: %Position{x: x, y: y, direction: :W}
+  defp perform(%Position{point: point, direction: :N}, :L),
+    do: %Position{point: point, direction: :W}
 
-  defp do_perform(%Position{x: x, y: y, direction: :N}, :R),
-    do: %Position{x: x, y: y, direction: :E}
+  defp perform(%Position{point: point, direction: :N}, :R),
+    do: %Position{point: point, direction: :E}
 
-  defp do_perform(%Position{x: x, y: y, direction: :S}, :L),
-    do: %Position{x: x, y: y, direction: :E}
+  defp perform(%Position{point: point, direction: :S}, :L),
+    do: %Position{point: point, direction: :E}
 
-  defp do_perform(%Position{x: x, y: y, direction: :S}, :R),
-    do: %Position{x: x, y: y, direction: :W}
+  defp perform(%Position{point: point, direction: :S}, :R),
+    do: %Position{point: point, direction: :W}
 
-  defp do_perform(%Position{x: x, y: y, direction: :W}, :L),
-    do: %Position{x: x, y: y, direction: :S}
+  defp perform(%Position{point: point, direction: :W}, :L),
+    do: %Position{point: point, direction: :S}
 
-  defp do_perform(%Position{x: x, y: y, direction: :W}, :R),
-    do: %Position{x: x, y: y, direction: :N}
+  defp perform(%Position{point: point, direction: :W}, :R),
+    do: %Position{point: point, direction: :N}
 
-  defp do_perform(%Position{x: x, y: y, direction: :E}, :L),
-    do: %Position{x: x, y: y, direction: :N}
+  defp perform(%Position{point: point, direction: :E}, :L),
+    do: %Position{point: point, direction: :N}
 
-  defp do_perform(%Position{x: x, y: y, direction: :E}, :R),
-    do: %Position{x: x, y: y, direction: :S}
+  defp perform(%Position{point: point, direction: :E}, :R),
+    do: %Position{point: point, direction: :S}
 end

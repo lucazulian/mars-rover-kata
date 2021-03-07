@@ -14,10 +14,38 @@ Requirements:
 
 To play with robot:
 
+enter in the docker container:
+
 ``` bash
-bash-5.1# mix play <<EOF
-5 3
-1 1 E
+make shell
+```
+
+and give him instructions:
+
+``` bash
+mix play <<EOF
+5:3
+
+1:1:E
 FBFBFBF
 EOF
+
+hey, reach 2:1:E
+```
+
+``` bash
+mix play <<EOF
+5:5
+0:1
+0:0:N
+FR
+EOF
+
+hey, stop 0:0:N - 0:1
+```
+
+Or simply run the test suite:
+
+``` bash
+mix test
 ```

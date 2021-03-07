@@ -10,6 +10,6 @@ defmodule Mix.Tasks.Play do
       |> IO.read()
       |> MarsRoverKata.explore()
 
-    IO.puts("hey, I reached #{result} position")
+    IO.puts("hey, #{result}")
   end
 end

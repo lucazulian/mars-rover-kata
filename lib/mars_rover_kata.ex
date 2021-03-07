@@ -7,14 +7,19 @@ defmodule MarsRoverKata do
   alias MarsRoverKata.Position
 
   @spec explore(String.t()) :: String.t()
-  @spec explore(Planet.t(), Position.t(), list(atom)) :: Position.t()
+  @spec explore(Planet.t(), Position.t(), list(atom)) ::
+          {:ok, Position.t()} | {:error, Position.t(), Point.t()}
 
   def explore(input) do
     case Input.parse(input) do
       {:ok, parsed} ->
-        %Planet{max_x: parsed.max_x, max_y: parsed.max_y}
+        %Planet{
+          max_x: parsed.max_x,
+          max_y: parsed.max_y,
+          obstacles: parsed.obstacles
+        }
         |> explore(parsed.position, parsed.instructions)
-        |> to_string()
+        |> parse_result()
 
       {:error, error} ->
         error
@@ -26,7 +31,7 @@ defmodule MarsRoverKata do
         %Position{} = position,
         []
       ) do
-    position
+    {:ok, position}
   end
 
   def explore(
@@ -34,7 +39,18 @@ defmodule MarsRoverKata do
         %Position{} = position,
         [instruction | instructions]
       ) do
-    new_position = Instruction.perform(planet, position, instruction)
-    explore(planet, new_position, instructions)
+    new_position = Instruction.perform_next(planet, position, instruction)
+
+    case Planet.has_obstacles?(planet, new_position.point) do
+      true ->
+        obstacle = Planet.fetch_obstacles(planet, new_position.point)
+        {:error, position, obstacle}
+
+      _ ->
+        explore(planet, new_position, instructions)
+    end
   end
+
+  defp parse_result({:ok, position}), do: "reach #{position}"
+  defp parse_result({:error, position, obstacle}), do: "stop #{position} - #{obstacle}"
 end

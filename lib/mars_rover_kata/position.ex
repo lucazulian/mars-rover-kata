@@ -3,21 +3,21 @@ defmodule MarsRoverKata.Position do
   Represent the rover position
   """
 
+  alias MarsRoverKata.Point
+
   @type t :: %__MODULE__{
-          x: integer(),
-          y: integer(),
+          point: Point.t(),
           direction: :N | :S | :W | :E
         }
 
-  defstruct x: 0,
-            y: 0,
+  defstruct point: %Point{},
             direction: :N
 end
 
 defimpl String.Chars, for: MarsRoverKata.Position do
   alias MarsRoverKata.Position
 
-  def to_string(%Position{x: x, y: y, direction: direction}) do
-    "#{x}:#{y}:#{direction}"
+  def to_string(%Position{point: point, direction: direction}) do
+    "#{point}:#{direction}"
   end
 end
