@@ -53,7 +53,7 @@ jobs:
       if: steps.plt-cache.outputs.cache-hit != 'true'
       run: |
         mkdir -p priv/plts
-        mix dialyzer --plt
+        mix check
 
     - name: Static code analysis
       run: mix check

@@ -35,7 +35,7 @@ defmodule MarsRoverKata.MixProject do
   defp aliases do
     [
       ci: ["format --check-formatted", "cs", "check"],
-      check: ["credo --strict", "dialyzer"],
+      check: ["credo --strict", "dialyzer --plt"],
       cs: "compile --all-warnings --ignore-module-conflict --debug-info",
       "format.all": "format mix.exs 'lib/**/*.{ex,exs}' 'test/**/*.{ex,exs}' 'config/*.{ex,exs}'"
     ]
@@ -43,7 +43,7 @@ defmodule MarsRoverKata.MixProject do
 
   defp dialyzer do
     [
-      ignore_warnings: ".dialyzerignore",
+      ignore_warnings: ".dialyzer_ignore.exs",
       plt_add_apps: [:ex_unit, :mix],
       plt_add_deps: :app_tree,
       plt_file: {:no_warn, "priv/plts/mars_rover_kata.plt"}
