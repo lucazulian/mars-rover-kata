@@ -13,3 +13,11 @@ defmodule MarsRoverKata.Position do
             y: 0,
             direction: :N
 end
+
+defimpl String.Chars, for: MarsRoverKata.Position do
+  alias MarsRoverKata.Position
+
+  def to_string(%Position{x: x, y: y, direction: direction}) do
+    "#{x}:#{y}:#{direction}"
+  end
+end

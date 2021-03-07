@@ -41,3 +41,11 @@ defmodule MarsRoverKata.Planet do
     }
   end
 end
+
+defimpl String.Chars, for: MarsRoverKata.Planet do
+  alias MarsRoverKata.Planet
+
+  def to_string(%Planet{max_x: max_x, max_y: max_y}) do
+    "#{max_x}:#{max_y}"
+  end
+end
