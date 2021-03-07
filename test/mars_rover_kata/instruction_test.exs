@@ -58,7 +58,9 @@ defmodule MarsRoverKata.InstructionTest do
     @instruction instruction
     @expected expected
 
-    test "correctly move on planet #{@planet} from position #{position} with instruction #{instruction}" do
+    test "correctly move on planet #{@planet} from position #{position} with instruction #{
+           instruction
+         }" do
       assert Instruction.perform(@planet, @position, @instruction) == @expected
     end
   end
