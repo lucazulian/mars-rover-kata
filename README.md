@@ -11,3 +11,13 @@ Requirements:
  - Implement commands that turn the rover left/right (l,r).
  - Implement wrapping from one edge of the grid to another. (planets are spheres after all)
  - Implement obstacle detection before each move to a new square. If a given sequence of commands encounters an obstacle, the rover moves up to the last possible point, aborts the sequence and reports the obstacle.
+
+To play with robot:
+
+``` bash
+bash-5.1# mix play <<EOF
+5 3
+1 1 E
+FBFBFBF
+EOF
+```

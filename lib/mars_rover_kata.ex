@@ -2,9 +2,9 @@ defmodule MarsRoverKata do
   @moduledoc false
 
   alias MarsRoverKata.Input
+  alias MarsRoverKata.Instruction
   alias MarsRoverKata.Planet
   alias MarsRoverKata.Position
-  alias MarsRoverKata.Instruction
 
   @spec explore(String.t()) :: String.t()
   @spec explore(Planet.t(), Position.t(), list(atom)) :: Position.t()

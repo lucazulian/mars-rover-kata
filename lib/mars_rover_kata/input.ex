@@ -30,7 +30,7 @@ defmodule MarsRoverKata.Input do
 
   @spec parse(String.t()) :: {:ok, __MODULE__.t()} | {:error, String.t()}
   def parse(input) when is_binary(input) and byte_size(input) > 0 do
-    [grid_dimension | [position | [sets]]] = String.split(input, "\n")
+    [grid_dimension | [position | [sets | _rest]]] = String.split(input, "\n")
 
     [x, y] = parse_grid_dimension(grid_dimension)
 
