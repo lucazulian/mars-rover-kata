@@ -8,12 +8,60 @@ defmodule MarsRoverKata.InstructionTest do
   alias MarsRoverKata.Planet
   alias MarsRoverKata.Position
 
-  test "parse correctly a valid input" do
-    planet = %Planet{max_x: 5, max_y: 5}
-    position = %Position{x: 0, y: 0, direction: :N}
+  @planet %Planet{max_x: 5, max_y: 5}
 
-    next_position = Instruction.perform(planet, position, :F)
+  values = [
+    [
+      %Position{x: 0, y: 0, direction: :N},
+      :F,
+      %Position{x: 0, y: 1, direction: :N}
+    ],
+    [
+      %Position{x: 0, y: 0, direction: :N},
+      :B,
+      %Position{x: 0, y: 4, direction: :N}
+    ],
+    [
+      %Position{x: 0, y: 0, direction: :S},
+      :F,
+      %Position{x: 0, y: 4, direction: :S}
+    ],
+    [
+      %Position{x: 0, y: 0, direction: :S},
+      :B,
+      %Position{x: 0, y: 1, direction: :S}
+    ],
+    [
+      %Position{x: 0, y: 0, direction: :W},
+      :F,
+      %Position{x: 4, y: 0, direction: :W}
+    ],
+    [
+      %Position{x: 0, y: 0, direction: :W},
+      :B,
+      %Position{x: 1, y: 0, direction: :W}
+    ],
+    [
+      %Position{x: 0, y: 0, direction: :E},
+      :F,
+      %Position{x: 1, y: 0, direction: :E}
+    ],
+    [
+      %Position{x: 0, y: 0, direction: :E},
+      :B,
+      %Position{x: 4, y: 0, direction: :E}
+    ]
+  ]
 
-    assert next_position == %Position{x: 0, y: 1}
+  for [position, instruction, expected] <- values do
+    @position position
+    @instruction instruction
+    @expected expected
+
+    test "correctly move #{inspect(@planet)} from #{inspect(position)} with #{
+           inspect(instruction)
+         }" do
+      assert Instruction.perform(@planet, @position, @instruction) == @expected
+    end
   end
 end
