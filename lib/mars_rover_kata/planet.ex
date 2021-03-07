@@ -49,12 +49,9 @@ defmodule MarsRoverKata.Planet do
     }
   end
 
+  @spec has_obstacles?(__MODULE__.t(), Point.t()) :: boolean
   def has_obstacles?(%__MODULE__{obstacles: obstacles}, point) do
     Enum.any?(obstacles, &(&1 == point))
-  end
-
-  def fetch_obstacles(%__MODULE__{obstacles: obstacles}, point) do
-    Enum.find(obstacles, &(&1 == point))
   end
 end
 

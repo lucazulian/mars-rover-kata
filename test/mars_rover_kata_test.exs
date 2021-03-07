@@ -10,65 +10,44 @@ defmodule MarsRoverKataTest do
   alias MarsRoverKata.Position
 
   @planet %Planet{max_x: 5, max_y: 5}
-  @starting_point Point.new(0, 0)
+  @starting_position %Position{point: Point.new(0, 0), direction: :N}
 
   values = [
-    [
-      %Position{point: @starting_point, direction: :N},
-      [],
-      %Position{point: @starting_point, direction: :N}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:R],
-      %Position{point: @starting_point, direction: :E}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:R, :R],
-      %Position{point: @starting_point, direction: :S}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:R, :R, :R],
-      %Position{point: @starting_point, direction: :W}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:R, :R, :R, :R],
-      %Position{point: @starting_point, direction: :N}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:L],
-      %Position{point: @starting_point, direction: :W}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:L, :L],
-      %Position{point: @starting_point, direction: :S}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:L, :L, :L],
-      %Position{point: @starting_point, direction: :E}
-    ],
-    [
-      %Position{point: @starting_point, direction: :N},
-      [:L, :L, :L, :L],
-      %Position{point: @starting_point, direction: :N}
-    ]
+    [[0, 0, :N], []],
+    [[0, 0, :E], [:R]],
+    [[0, 0, :S], [:R, :R]],
+    [[0, 0, :W], [:R, :R, :R]],
+    [[0, 0, :N], [:R, :R, :R, :R]],
+    [[0, 0, :W], [:L]],
+    [[0, 0, :S], [:L, :L]],
+    [[0, 0, :E], [:L, :L, :L]],
+    [[0, 0, :N], [:L, :L, :L, :L]],
+    [[0, 1, :N], [:F]],
+    [[0, 3, :N], [:F, :F, :F]],
+    [[0, 0, :N], [:F, :B, :B, :F]],
+    [[0, 2, :S], [:F, :F, :F, :F, :F, :R, :R, :F, :F, :F]],
+    [[1, 0, :E], [:R, :F]],
+    [[0, 0, :E], [:R, :F, :F, :F, :F, :F]],
+    [[0, 0, :W], [:R, :F, :R, :R, :F]],
+    [[3, 0, :W], [:R, :F, :F, :F, :F, :F, :R, :R, :F, :F]],
+    [[0, 0, :N], [:F, :F, :F, :F, :F, :F, :F, :F, :F, :F]],
+    [[0, 0, :N], [:F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F]],
+    [[0, 4, :S], [:R, :R, :F]],
+    [[0, 0, :S], [:R, :R, :F, :F, :F, :F, :F]],
+    [[0, 0, :E], [:R, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F]],
+    [[0, 0, :E], [:R, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F, :F]],
+    [[4, 0, :W], [:L, :F]],
+    [[0, 0, :W], [:L, :F, :F, :F, :F, :F]]
   ]
 
-  for [position, instructions, expected] <- values do
-    @position position
+  for [[expected_x, expected_y, expected_direction], instructions] <- values do
     @instructions instructions
-    @expected expected
+    @expected %Position{point: Point.new(expected_x, expected_y), direction: expected_direction}
 
-    test "correctly follow path on planet #{@planet} from position #{position} with instructions #{
-           inspect(instructions)
-         }" do
-      assert MarsRoverKata.explore(@planet, @position, @instructions) == {:ok, @expected}
+    test ~s(correctly follow path on planet #{@planet} from position #{@starting_position} with instructions #{
+           inspect(@instructions)
+         }) do
+      assert MarsRoverKata.explore(@planet, @starting_position, @instructions) == {:ok, @expected}
     end
   end
 

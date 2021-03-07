@@ -43,8 +43,7 @@ defmodule MarsRoverKata do
 
     case Planet.has_obstacles?(planet, new_position.point) do
       true ->
-        obstacle = Planet.fetch_obstacles(planet, new_position.point)
-        {:error, position, obstacle}
+        {:error, position, new_position.point}
 
       _ ->
         explore(planet, new_position, instructions)

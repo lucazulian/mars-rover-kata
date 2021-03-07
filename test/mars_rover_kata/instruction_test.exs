@@ -10,58 +10,27 @@ defmodule MarsRoverKata.InstructionTest do
   alias MarsRoverKata.Position
 
   @planet %Planet{max_x: 5, max_y: 5}
+  @starting_point Point.new(0, 0)
 
   values = [
-    [
-      %Position{point: Point.new(0, 0), direction: :N},
-      :F,
-      %Position{point: Point.new(0, 1), direction: :N}
-    ],
-    [
-      %Position{point: Point.new(0, 0), direction: :N},
-      :B,
-      %Position{point: Point.new(0, 4), direction: :N}
-    ],
-    [
-      %Position{point: Point.new(0, 0), direction: :S},
-      :F,
-      %Position{point: Point.new(0, 4), direction: :S}
-    ],
-    [
-      %Position{point: Point.new(0, 0), direction: :S},
-      :B,
-      %Position{point: Point.new(0, 1), direction: :S}
-    ],
-    [
-      %Position{point: Point.new(0, 0), direction: :W},
-      :F,
-      %Position{point: Point.new(4, 0), direction: :W}
-    ],
-    [
-      %Position{point: Point.new(0, 0), direction: :W},
-      :B,
-      %Position{point: Point.new(1, 0), direction: :W}
-    ],
-    [
-      %Position{point: Point.new(0, 0), direction: :E},
-      :F,
-      %Position{point: Point.new(1, 0), direction: :E}
-    ],
-    [
-      %Position{point: Point.new(0, 0), direction: :E},
-      :B,
-      %Position{point: Point.new(4, 0), direction: :E}
-    ]
+    [:N, :N, [0, 1], :F],
+    [:N, :N, [0, 4], :B],
+    [:S, :S, [0, 4], :F],
+    [:S, :S, [0, 1], :B],
+    [:W, :W, [4, 0], :F],
+    [:W, :W, [1, 0], :B],
+    [:E, :E, [1, 0], :F],
+    [:E, :E, [4, 0], :B]
   ]
 
-  for [position, instruction, expected] <- values do
-    @position position
+  for [direction, expected_direction, [expected_x, expected_y], instruction] <- values do
+    @position %Position{point: @starting_point, direction: direction}
     @instruction instruction
-    @expected expected
+    @expected %Position{point: Point.new(expected_x, expected_y), direction: expected_direction}
 
-    test "correctly move on planet #{@planet} from position #{position} with instruction #{
-           instruction
-         }" do
+    test ~s(correctly move on planet #{@planet} from position #{@position} with instruction #{
+           @instruction
+         }) do
       assert Instruction.perform_next(@planet, @position, @instruction) == @expected
     end
   end
