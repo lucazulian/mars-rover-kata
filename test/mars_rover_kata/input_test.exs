@@ -1,7 +1,7 @@
 defmodule MarsRoverKata.InputTest do
   @moduledoc false
 
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest MarsRoverKata.Input
 
   alias MarsRoverKata.Input

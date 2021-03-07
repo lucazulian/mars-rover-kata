@@ -1,8 +1,6 @@
 defmodule MarsRoverKataTest do
-  use ExUnit.Case
-  doctest MarsRoverKata
+  @moduledoc false
 
-  test "greets the world" do
-    assert MarsRoverKata.hello() == :world
-  end
+  use ExUnit.Case, async: true
+  doctest MarsRoverKata
 end

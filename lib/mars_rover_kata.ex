@@ -1,18 +1,15 @@
 defmodule MarsRoverKata do
-  @moduledoc """
-  Documentation for `MarsRoverKata`.
-  """
+  @moduledoc false
 
-  @doc """
-  Hello world.
+  alias MarsRoverKata.Input
 
-  ## Examples
+  def explore(input) do
+    case Input.parse(input) do
+      {:ok, parsed} ->
+        parsed
 
-      iex> MarsRoverKata.hello()
-      :world
-
-  """
-  def hello do
-    :world
+      error ->
+        error
+    end
   end
 end
