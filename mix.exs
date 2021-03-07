@@ -13,7 +13,13 @@ defmodule MarsRoverKata.MixProject do
       consolidate_protocols: Mix.env() != :test,
       aliases: aliases(),
       deps: deps(),
-      dialyzer: dialyzer()
+      dialyzer: dialyzer(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.html": :test
+      ]
     ]
   end
 
@@ -28,7 +34,8 @@ defmodule MarsRoverKata.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:credo, "1.5.0", only: [:dev], runtime: false}
+      {:credo, "1.5.0", only: [:dev], runtime: false},
+      {:excoveralls, "~> 0.10", only: :test}
     ]
   end
 
@@ -37,7 +44,8 @@ defmodule MarsRoverKata.MixProject do
       ci: ["format --check-formatted", "cs", "check"],
       check: ["credo --strict", "dialyzer --plt"],
       cs: "compile --all-warnings --ignore-module-conflict --debug-info",
-      "format.all": "format mix.exs 'lib/**/*.{ex,exs}' 'test/**/*.{ex,exs}' 'config/*.{ex,exs}'"
+      "format.all": "format mix.exs 'lib/**/*.{ex,exs}' 'test/**/*.{ex,exs}' 'config/*.{ex,exs}'",
+      test: ["coveralls"]
     ]
   end
 
