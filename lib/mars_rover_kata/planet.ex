@@ -50,15 +50,15 @@ defmodule MarsRoverKata.Planet do
         %__MODULE__{max_x: max_x, max_y: max_y}
       ) do
     point =
-      if max_y < y || y < 0 do
+      if crossing_vertical_edges?(max_y, y) do
         Point.new(
-          one_based_mod(y, max_y),
-          one_based_mod(x, max_x)
+          Integer.mod(y, max_y),
+          Integer.mod(x, max_x)
         )
       else
         Point.new(
-          one_based_mod(x, max_x),
-          one_based_mod(y, max_y)
+          Integer.mod(x, max_x),
+          Integer.mod(y, max_y)
         )
       end
 
@@ -73,15 +73,8 @@ defmodule MarsRoverKata.Planet do
     Enum.any?(obstacles, &(&1 == point))
   end
 
-  @spec one_based_mod(integer, neg_integer | pos_integer) :: integer
-  defp one_based_mod(dividend, divisor) do
-    remainder = rem(dividend, divisor)
-
-    if remainder * divisor < 0 do
-      remainder + divisor
-    else
-      remainder
-    end
+  defp crossing_vertical_edges?(max_y, y) do
+    0 > y || y > max_y
   end
 end
 
