@@ -44,12 +44,10 @@ defmodule MarsRoverKata do
       ) do
     new_position = Instruction.perform_next(planet, position, instruction)
 
-    case Planet.has_obstacles?(planet, new_position.point) do
-      true ->
-        {:error, {position, new_position.point}}
-
-      _ ->
-        explore(planet, new_position, instructions)
+    if Planet.has_obstacles?(planet, new_position.point) do
+      {:error, {position, new_position.point}}
+    else
+      explore(planet, new_position, instructions)
     end
   end
 

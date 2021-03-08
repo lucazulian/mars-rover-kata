@@ -1,6 +1,6 @@
 defmodule MarsRoverKata.Position do
   @moduledoc """
-  Represent the rover position
+  Represent the rover position.
   """
 
   alias MarsRoverKata.Point

@@ -1,6 +1,6 @@
 defmodule MarsRoverKata.Instruction do
   @moduledoc """
-  Apply instructions to robot position
+  Apply instructions to robot position.
   """
 
   alias MarsRoverKata.Planet

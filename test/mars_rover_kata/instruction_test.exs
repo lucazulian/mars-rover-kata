@@ -13,17 +13,17 @@ defmodule MarsRoverKata.InstructionTest do
   @starting_point Point.new(0, 0)
 
   values = [
-    [:N, :N, [0, 1], :F],
-    [:N, :N, [0, 4], :B],
-    [:S, :S, [0, 4], :F],
-    [:S, :S, [0, 1], :B],
-    [:W, :W, [4, 0], :F],
-    [:W, :W, [1, 0], :B],
-    [:E, :E, [1, 0], :F],
-    [:E, :E, [4, 0], :B]
+    [:N, [0, 1, :N], :F],
+    [:N, [4, 0, :N], :B],
+    [:S, [4, 0, :S], :F],
+    [:S, [0, 1, :S], :B],
+    [:W, [4, 0, :W], :F],
+    [:W, [1, 0, :W], :B],
+    [:E, [1, 0, :E], :F],
+    [:E, [4, 0, :E], :B]
   ]
 
-  for [direction, expected_direction, [expected_x, expected_y], instruction] <- values do
+  for [direction, [expected_x, expected_y, expected_direction], instruction] <- values do
     @position %Position{point: @starting_point, direction: direction}
     @instruction instruction
     @expected %Position{point: Point.new(expected_x, expected_y), direction: expected_direction}

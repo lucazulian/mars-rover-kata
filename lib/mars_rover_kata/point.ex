@@ -1,6 +1,6 @@
 defmodule MarsRoverKata.Point do
   @moduledoc """
-  Represent a single point
+  Represent a single point.
   """
 
   @type t :: %__MODULE__{
