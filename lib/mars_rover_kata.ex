@@ -24,6 +24,9 @@ defmodule MarsRoverKata do
       {:error, error} ->
         error
     end
+  rescue
+    _error ->
+      "malformed input"
   end
 
   def explore(

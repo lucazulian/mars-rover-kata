@@ -63,6 +63,10 @@ defmodule MarsRoverKataTest do
     assert MarsRoverKata.explore(nil) == "invalid input data"
   end
 
+  test "return error with malformed input" do
+    assert MarsRoverKata.explore(~s(5:5\n)) == "malformed input"
+  end
+
   test "correctly stop following path with valid input and obstacles" do
     planet = %Planet{max_x: 5, max_y: 5, obstacles: [Point.new(0, 1)]}
 
