@@ -8,7 +8,7 @@ defmodule MarsRoverKata do
 
   @spec explore(String.t()) :: String.t()
   @spec explore(Planet.t(), Position.t(), list(atom)) ::
-          {:ok, Position.t()} | {:error, Position.t(), Point.t()}
+          {:ok, Position.t()} | {:error, {Position.t(), Point.t()}}
 
   def explore(input) do
     case Input.parse(input) do
@@ -46,7 +46,7 @@ defmodule MarsRoverKata do
 
     case Planet.has_obstacles?(planet, new_position.point) do
       true ->
-        {:error, position, new_position.point}
+        {:error, {position, new_position.point}}
 
       _ ->
         explore(planet, new_position, instructions)
@@ -54,5 +54,5 @@ defmodule MarsRoverKata do
   end
 
   defp parse_result({:ok, position}), do: "reach #{position}"
-  defp parse_result({:error, position, obstacle}), do: "stop #{position} - #{obstacle}"
+  defp parse_result({:error, {position, obstacle}}), do: "stop #{position} - #{obstacle}"
 end

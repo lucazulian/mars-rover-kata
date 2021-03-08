@@ -76,7 +76,7 @@ defmodule MarsRoverKataTest do
              [:F, :R]
            ) ==
              {:error,
-              %MarsRoverKata.Position{direction: :N, point: %MarsRoverKata.Point{x: 0, y: 0}},
-              %MarsRoverKata.Point{x: 0, y: 1}}
+              {%MarsRoverKata.Position{direction: :N, point: %MarsRoverKata.Point{x: 0, y: 0}},
+               %MarsRoverKata.Point{x: 0, y: 1}}}
   end
 end
