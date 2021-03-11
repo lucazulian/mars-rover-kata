@@ -28,6 +28,13 @@ jobs:
         key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
 
+    - name: Restore build cache
+      uses: actions/cache@v2
+      with:
+        path: _build
+        key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-build-${{ hashFiles('**/mix.lock') }}
+        restore-keys: ${{ runner.os }}-build-
+      
     - name: Install dependencies
       run: |
           mix local.rebar --force
@@ -37,6 +44,11 @@ jobs:
     - name: Check formatting
       run: mix format --check-formatted
 
+    - name: Compile project
+      run: |
+          MIX_ENV=test mix compile --warnings-as-errors
+          MIX_ENV=dev mix compile --warnings-as-errors
+    
     - name: Run tests
       run: |
         epmd -daemon
