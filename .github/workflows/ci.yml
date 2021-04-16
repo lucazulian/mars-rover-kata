@@ -27,6 +27,7 @@ jobs:
         experimental-otp: true
 
     - name: Retrieve dependencies cache
+      id: mix-cache
       uses: actions/cache@v2
       with:
         path: deps
@@ -62,6 +63,7 @@ jobs:
 
     - name: Retrieve Dialyzer PLT cache
       uses: actions/cache@v2
+      id: plt-cache
       with:
         path: priv/plts
         key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-plts-${{ hashFiles('**/mix.lock') }}
