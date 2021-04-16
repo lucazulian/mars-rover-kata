@@ -9,7 +9,7 @@ defaults:
 
 jobs:
   build:
-    name: Build and test - OTP ${{ matrix.otp }} / Elixir ${{ matrix.elixir }}
+    name: Build, test and check - OTP ${{ matrix.otp }} / Elixir ${{ matrix.elixir }}
     runs-on: ubuntu-latest
     strategy:
       matrix:
