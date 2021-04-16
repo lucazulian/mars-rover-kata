@@ -1,6 +1,11 @@
+---
 name: ci
 
 on: [push, pull_request]
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
   build:
@@ -21,25 +26,26 @@ jobs:
         otp-version: ${{matrix.otp}}
         experimental-otp: true
 
-    - name: Restore dependencies cache
+    - name: Retrieve dependencies cache
       uses: actions/cache@v2
       with:
         path: deps
         key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-mix-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-mix-
 
-    - name: Restore build cache
+    - name: Install dependencies
+      if: steps.mix-cache.outputs.cache-hit != 'true'
+      run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+
+    - name: Retrieve build cache
       uses: actions/cache@v2
       with:
         path: _build
         key: ${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-build-${{ hashFiles('**/mix.lock') }}
         restore-keys: ${{ runner.os }}-build-
-      
-    - name: Install dependencies
-      run: |
-          mix local.rebar --force
-          mix local.hex --force
-          mix deps.get
 
     - name: Check formatting
       run: mix format --check-formatted
@@ -48,7 +54,7 @@ jobs:
       run: |
           MIX_ENV=test mix compile --warnings-as-errors
           MIX_ENV=dev mix compile --warnings-as-errors
-    
+
     - name: Run tests
       run: |
         epmd -daemon
