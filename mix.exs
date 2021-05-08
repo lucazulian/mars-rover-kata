@@ -34,7 +34,7 @@ defmodule MarsRoverKata.MixProject do
   defp deps do
     [
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:credo, "1.5.0", only: [:dev], runtime: false},
+      {:credo, "1.5.5", only: [:dev], runtime: false},
       {:excoveralls, "~> 0.10", only: :test}
     ]
   end
