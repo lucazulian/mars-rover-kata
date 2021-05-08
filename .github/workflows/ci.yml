@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        otp: ['23.2']
+        otp: ['23.2.7']
         elixir: ['1.11.4']
 
     steps:
